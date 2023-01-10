@@ -34,6 +34,7 @@ The data is loaded simultaneously to align all the variables - x1, x2, y1, y2
 # Network Design
 
 We design a neural network which first convolves over the image and the random input x2 is added after the image is convolved.
+The Loss functions for output 1 was Negative log likelihood and for output 2 was a mean squared error.
 
 # Accuracy
 After 3 Epochs the test accuracy is at only 5%, perhaps this improves as we increase the number of epochs
