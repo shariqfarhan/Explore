@@ -36,6 +36,15 @@ The data is loaded simultaneously to align all the variables - x1, x2, y1, y2
 We design a neural network which first convolves over the image and the random input x2 is added after the image is convolved.
 The Loss functions for output 1 was Negative log likelihood and for output 2 was a mean squared error.
 
+We start with 1 channel (input) and expand it to 10 channels and convolve using a 5x5 kernel to extract features. Then we further expand it to 20 channels.
+After that we apply a dropout layer, so that the model learns better. The benefits of dropout are discussed in another place.
+
+Once we extract the features we create a fully connected layer which takes a flattened output from the previous layer and converts it to 320 input columns. In the next fully connected layer, we have a fully connected layer with 320 input units and 50 output units.
+
+In this layer, we add x2, it is fed into a FC layer with 20 inputs and 320 output units.
+
+After this the image generates 10 output units for output-1. And for Output-2 we have 20 output units.
+
 # Accuracy
 After 3 Epochs the test accuracy is at only 5%, perhaps this improves as we increase the number of epochs
 
