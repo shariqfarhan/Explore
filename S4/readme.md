@@ -18,36 +18,43 @@ But, as we have seen in the class, learning rates can wreak havoc in a neural ne
 
 ## Impact of learning rate on learning
 
-Learning rate = 0.1
+### Learning rate = 0.1
 
 <img width="441" alt="image" src="https://user-images.githubusercontent.com/57046534/212279999-78dfde06-280f-4800-a3fd-e7efe4f34375.png">
 
-Learning rate = 0.2
+For this learning rate, we see the elbow of the curve near 160-200 steps.
+
+### Learning rate = 0.2
 
 <img width="429" alt="image" src="https://user-images.githubusercontent.com/57046534/212280090-6a656c55-a68c-40db-8cbb-ed6cc3cfeb14.png">
+For this learning rate, we see the elbow of the curve near 120-150 steps.
 
-Learning rate = 0.5
+### Learning rate = 0.5
 
 <img width="424" alt="image" src="https://user-images.githubusercontent.com/57046534/212280353-8183af91-978f-490e-969e-6c1fd37b7ed0.png">
+For this learning rate, we see the elbow of the curve near 80-100 steps.
 
-
-Learning rate = 0.8
+### Learning rate = 0.8
 
 <img width="440" alt="image" src="https://user-images.githubusercontent.com/57046534/212280392-36b1a48a-6a2c-46ae-986b-eec295b8f85f.png">
+For this learning rate, we see the elbow of the curve near 40-60 steps.
 
-
-Learning rate = 1.0
+### Learning rate = 1.0
 
 <img width="441" alt="image" src="https://user-images.githubusercontent.com/57046534/212280431-4c936e17-b0df-4ee4-a4a4-f936463b2676.png">
+For this learning rate, we see the elbow of the curve near 40 steps.
 
-
-Learning rate = 2.0
+### Learning rate = 2.0
 
 <img width="545" alt="image" src="https://user-images.githubusercontent.com/57046534/212280483-a8e4d1ec-7efe-4205-8bdd-5fb3fa457e49.png">
+
+For this learning rate, we see the elbow of the curve near 30 steps.
 
 ## Conclusions
 
 We see that as the learning rates increase the learning happens quicker, but faster learning could be a double-edged sword as it can impact our global minima / local minima.
+
+For successful processing, we need the required target accuracy and the learning rate which could achieve that. If the learning rate is too high, the model will oscillate around the target accuracy but never reach the target. If it's too low, the model will take a lot of time to reach the required target accuracy.
 
 
 # Part 2 of the Assignment - Session 3 - Backpropagation and Architectural Basics
