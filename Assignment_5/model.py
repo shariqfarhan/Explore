@@ -1,12 +1,18 @@
 # We change the way we define the neural network. Earlier we used to work one convolution layer at a time, now we'll add more operations on top of the convolution layer
 # All of this will fall under 1 block.
 dropout_value = 0.1
+
 class Net(nn.Module):
+    
     def __init__(self, use_ln: bool = False, use_BN: bool = True, use_GN:bool = False):
+        
         super(Net, self).__init__()
+        
+        # Determining the Type of Normalization
         self.use_ln = use_ln # Initializing the Layer Normalization variable - If set to True, Layer Normalization is True
         self.use_BN = use_BN # Initializing the Batch Normalization variable - If set to True, Batch Normalization is True
         self.use_GN = use_GN # Initializing the Group Normalization variable - If set to True, Group Normalization is True
+        
         # Input Block
         self.convblock1 = nn.Sequential(
             nn.Conv2d(in_channels=1, out_channels=4, kernel_size=(3, 3), padding=0, bias=False),
@@ -42,6 +48,8 @@ class Net(nn.Module):
             nn.GroupNorm(2, 16) if self.use_GN else nn.Identity(), # We split 16 channels into 2 Groups
             nn.Dropout(dropout_value)
         ) # Input - 12 x 12 x 8 | Output - 10 x 10 x 16 | RF - 12 | Kernel - 3 x 3 x 8 x 16
+        
+        # TRANSITION BLOCK 2
         self.convblock5 = nn.Sequential(
             nn.Conv2d(in_channels=16, out_channels=16, kernel_size=(1, 1), padding=0, bias=False),
             #nn.BatchNorm2d(16),
@@ -51,6 +59,7 @@ class Net(nn.Module):
           # What is the benefit of having this block then? 
         ) # Input - 10 x 10 x 16 | Output - 10 x 10 x 16 | RF - 12 | Kernel - 3 x 3 x 16 x 16
 
+        # CONVOLUTION BLOCK 3
         self.convblock6 = nn.Sequential(
             nn.Conv2d(in_channels=16, out_channels=16, kernel_size=(3, 3), padding=0, bias=False),
             nn.BatchNorm2d(16)   if self.use_BN else nn.Identity(),
@@ -62,7 +71,7 @@ class Net(nn.Module):
           # What is the benefit of having this block then? 
         ) # Input - 8 x 8 x 16 | Output - 8 x 8 x 16 | RF - 14 | Kernel - 3 x 3 x 16 x 16
 
-        # OUTPUT BLOCK
+        # CONVOLUTION BLOCK 4
         self.convblock7 = nn.Sequential(
             nn.Conv2d(in_channels=16, out_channels=16, kernel_size=(3, 3), padding=0, bias=False),
             nn.BatchNorm2d(16)   if self.use_BN else nn.Identity(),
@@ -70,6 +79,8 @@ class Net(nn.Module):
             nn.LayerNorm(6, elementwise_affine = False) if self.use_ln else nn.Identity(),
             nn.GroupNorm(2, 16) if self.use_GN else nn.Identity() # We split 16 channels into 2 Groups
         ) # Input - 8 x 8 x 16 | Output - 6 x 6 x 16 | RF - 16 | Kernel - 3 x 3 x 16 x 16
+        
+        # CONVOLUTION BLOCK 5        
         self.convblock8 = nn.Sequential(
             nn.Conv2d(in_channels=16, out_channels=10, kernel_size=(3, 3), padding=0, bias=False),
             nn.BatchNorm2d(10)   if self.use_BN else nn.Identity(),
@@ -77,10 +88,14 @@ class Net(nn.Module):
             nn.LayerNorm(4, elementwise_affine = False) if self.use_ln else nn.Identity(),
             nn.GroupNorm(2, 10) if self.use_GN else nn.Identity() # We split 10 channels into 2 Groups
         ) # Input - 6 x 6 x 16 | Output - 4 x 4 x 10 | RF - 18 | Kernel - 3 x 3 x 16 x 10
+
+        # GAP Layer
         self.gap = nn.Sequential(
             nn.AvgPool2d(kernel_size=4)
         ) # output_size = 1
         # ) # Input - 6 x 6 x 10 | Output - 1 x 1 x 10 | RF - 21 | Kernel - 6 x 6 x 10 x 10
+        
+        # Output Layer
         self.convblock9 = nn.Sequential(
             nn.Conv2d(in_channels=10, out_channels=10, kernel_size=(1, 1), padding=0, bias=False),
             # nn.BatchNorm2d(10),
