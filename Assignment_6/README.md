@@ -118,7 +118,7 @@ Estimated Total Size (MB): 7.55
 ----------------------------------------------------------------
 ```
 
-Training Logs
+# Training Logs
 
 Unable to train in Colab for more than 12 epochs. If we can train for few more, we can hit the target of 85% in less than 200K params.
 
