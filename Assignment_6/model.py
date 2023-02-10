@@ -5,7 +5,7 @@ dropout_value = 0.1
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.convblock_0 = nn.Sequential(
+        self.convblock1 = nn.Sequential(
                        nn.Conv2d(in_channels=3,out_channels=16,kernel_size=(3,3),dilation=2,stride=1,padding=2,bias=False,),
                        nn.ReLU(),
                        nn.BatchNorm2d(16),
@@ -28,7 +28,7 @@ class Net(nn.Module):
                       )
         
         # depthwise seperable Convolution 1
-        self.convblock_1 = nn.Sequential(
+        self.convblock2 = nn.Sequential(
         
                        nn.Conv2d(in_channels=64,out_channels=64,kernel_size=(3,3),stride=(2,2),dilation=2,padding=2,bias=False,),# maxpool added after RF >11
                        nn.ReLU(),
@@ -60,7 +60,7 @@ class Net(nn.Module):
                       #  nn.Dropout(dropout_value) , # 16X16X64 | RF=29                                                         
                        )
         # depthwise seperable Convolution 2
-        self.convblock_2 = nn.Sequential(
+        self.convblock3 = nn.Sequential(
         
                        nn.Conv2d(in_channels=32,out_channels=32,kernel_size=(3,3),stride=(2,2),dilation=2,padding=2,bias=False,),
                        nn.ReLU(),
@@ -87,7 +87,7 @@ class Net(nn.Module):
 
                       )
         # depthwise seperable Convolution 2
-        self.convblock_3 = nn.Sequential(
+        self.convblock4 = nn.Sequential(
         
                        #Maxpooling
                        nn.Conv2d(in_channels=64,out_channels=64,kernel_size=(3,3),dilation=2,stride=(2,2),padding=2,bias=False),
@@ -112,7 +112,7 @@ class Net(nn.Module):
                        )
         # 4X4X10 | RF=121
         self.gap = nn.Sequential(nn.AvgPool2d(kernel_size=4))
-        self.convblock_4 = nn.Sequential(
+        self.convblock5 = nn.Sequential(
             nn.Conv2d(in_channels=32, out_channels=10, kernel_size=(1, 1), padding=0, bias=False)
         )
         # Input - 4X4X64 | Output - 1X1X64 
@@ -122,12 +122,12 @@ class Net(nn.Module):
     
     def forward(self, x):
       
-      x = self.convblock_0(x)
-      x = self.convblock_1(x)
-      x = self.convblock_2(x)
-      x = self.convblock_3(x)
+      x = self.convblock1(x)
+      x = self.convblock2(x)
+      x = self.convblock3(x)
+      x = self.convblock4(x)
       x = self.gap(x)
-      x = self.convblock_4(x)
+      x = self.convblock5(x)
       # x = self.fc1(x)
       # x = self.fc2(x)     
       x = x.view(-1, 10)
