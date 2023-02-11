@@ -17,11 +17,11 @@
 
 # Summary
 
-Total Model Parameters :  151902
-Best Train Accuracy :  88.28125
-Best Test Accuracy :  86.45
-Number of Epochs with test accuracy above 85% threshold: 13
-Receptive Field - 109
+1. Total Model Parameters :  151902
+2. Best Train Accuracy :  88.28125
+3. Best Test Accuracy :  86.45
+4. Number of Epochs with test accuracy above 85% threshold: 13
+5. Receptive Field - 109
 
 
 # Receptive Field Calculation for the model
