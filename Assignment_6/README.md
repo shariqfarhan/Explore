@@ -395,3 +395,9 @@ Test set: Average loss: 0.4148, Accuracy: 8602/10000 (86.02%)
 
 <img width="890" alt="image" src="https://user-images.githubusercontent.com/57046534/218267911-92f49dd1-6856-4e41-b451-61cd804b7ad1.png">
 
+# Mis-Classified Images
+
+![image](https://user-images.githubusercontent.com/57046534/218391439-7deca60a-382d-4dce-886c-ad76a55ea71f.png)
+
+
+
