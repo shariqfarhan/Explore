@@ -1,7 +1,50 @@
+import numpy as np
 import torch
 import matplotlib.pyplot as plt
 from torchsummary import summary
 
+
+'''
+The functions in this file can be used to 
+
+1. understand the data
+2. transformations on the data
+3. Data Augmentation
+4. Understand Predictions using GradCAM
+5. Showing Mis-Classified Images
+
+'''
+# Function to understand the basic metrics about the data
+
+def show_data_metrics(data):
+    # This function is used to derive various metrics to understand about the data
+    exp_data = data
+    print('Train')
+    print('- Numpy Shape :', exp_data.shape)
+    print('- min :', np.min(exp_data, axis = (0,1,2)) / 255.)
+    print('- max :', np.max(exp_data, axis = (0,1,2)) / 255.)
+    print('- mean :', np.mean(exp_data, axis = (0,1,2)) / 255.)
+    print('- std. :', np.std(exp_data, axis = (0,1,2)) / 255.)
+    print('- var :', np.var(exp_data, axis = (0,1,2)) / 255.)
+
+
+# Function to show sample images on the dataset
+
+def sample_data(cols=8, rows=5):
+    figure = plt.figure(figsize = (14,10))
+    for i in range(1, cols * rows + 1):
+        img, label = exp[i]
+        
+        figure.add_subplot(rows, cols, i)
+        plt.title(exp.classes[label])
+        plt.axis('off')
+        plt.imshow(img, cmap = 'gray')
+    
+    plt.tight_layout()
+    plt.show()
+
+# Function to show base images and images after applying augmentations
+    
 def show_images(aug_dict, ncol = 6):
     nrow = len(aug_dict)
     
@@ -27,18 +70,7 @@ def show_images(aug_dict, ncol = 6):
     plt.tight_layout()
     plt.show()
  
-def sample_data(cols=8, rows=5):
-    figure = plt.figure(figsize = (14,10))
-    for i in range(1, cols * rows + 1):
-        img, label = exp[i]
-        
-        figure.add_subplot(rows, cols, i)
-        plt.title(exp.classes[label])
-        plt.axis('off')
-        plt.imshow(img, cmap = 'gray')
-    
-    plt.tight_layout()
-    plt.show()
+# Function to show Model Summary
     
 def show_model_summary(model):
     use_cuda = torch.cuda.is_available()
@@ -46,6 +78,9 @@ def show_model_summary(model):
     print(device)
     net = model(drop=0.0).to(device)
     summary(net, input_size=(3,32,32))
+
+# Class function to generate an augmented dataset given an input set of images from CIFAR10 dataset
+# To apply this to another dataset, we need to change the inputs to the normalize functions - as each dataset would have it's own set of parameters
     
 class AlbumentationImageDataset(Dataset):
     def __init__(self, image_list, train = True):
