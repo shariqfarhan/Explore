@@ -28,7 +28,7 @@
 
 ```
 
-Input_features	padding	kernel	stride	dilation	jump_In	jump_out	RF_In	RF_Out	Output_Feature	Input_Channel	Output_Channels	kernel_adjusted	Convolution Type
+Input_features	padding	kernel	stride	dilation jump_In jump_out	RF_In	RF_Out	Output_Feature	Input_Channel	Output_Channels	kernel_adjusted	Convolution Type
 32	1	3	1	1	1	1	1	3	32	3	16	3	Normal
 32	1	3	1	1	1	1	3	5	32	16	32	3	Normal
 32	1	3	1	1	1	1	5	7	32	32	64	3	Normal
@@ -135,7 +135,7 @@ Estimated Total Size (MB): 6.92
 
 # Training Logs
 
-Unable to train in Colab for more than 12 epochs. If we can train for few more, we can hit the target of 85% in less than 200K params.
+The below training logs shows the model achieves 85% accuracy in less than 50 epochs.
 
 ```
 EPOCH: 0
