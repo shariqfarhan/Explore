@@ -27,49 +27,52 @@ class Net(nn.Module):
                        nn.Dropout(dropout_value), # Input - 32X32X64 | Output - 32X32X64 |RF= 9
                       )
         
-        # depthwise seperable Convolution 1
-        self.convblock_1 = nn.Sequential(
         
-                       nn.Conv2d(in_channels=32,out_channels=64,kernel_size=(3,3),stride=(2,2),dilation=1,padding=1,bias=False,),# maxpool added after RF >11
+        self.convblock_1 = nn.Sequential(
+            
+                        # Strided Convolution 1
+                       nn.Conv2d(in_channels=32,out_channels=64,kernel_size=(3,3),stride=(2,2),dilation=1,padding=1,bias=False,),
                        nn.ReLU(),
                        nn.BatchNorm2d(64),
                        nn.Dropout(dropout_value), # Input - 32X32X64 | Output - 16X16X64 |RF=11
-
+            
+                        # depthwise seperable Convolution 1
                        nn.Conv2d(in_channels=64,out_channels=64,groups=64,kernel_size=(3,3),stride=(1,1),dilation=1,padding=1,bias=False,),
                        # Input - 16X16X64 | Output - 16X16X64 | RF=15
+            
+                        # Pointwise Convolution 1
                        nn.Conv2d(in_channels=64,out_channels=128,kernel_size=(1,1),stride=(1,1),padding=0,bias=False,),
                        # Input - 16X16X64 | Output - 16X16X64 | RF=15
                        nn.ReLU(),
                        nn.BatchNorm2d(128), 
                        nn.Dropout(dropout_value), # 16X16X64 | RF=21                                       
-                       # pointwise   
 
+                       # depthwise seperable Convolution 2
                        nn.Conv2d(in_channels=128,out_channels=128,groups=128,kernel_size=(3,3),dilation=1,stride=(1,1),padding=1,bias=False,),
                        # Input - 16X16X64 | Output - 16X16X64 | RF=29
+            
+                        # Pointwise Convolution 2
                        nn.Conv2d(in_channels=128,out_channels=64,kernel_size=(1,1),padding=0,bias=False,),
                        nn.ReLU(),
                        nn.BatchNorm2d(64),   
                        nn.Dropout(dropout_value), 
                        # Input - 16X16X64 | Output - 16X16X32 | RF=29
-                       
-                      #nn.Conv2d(in_channels=64,out_channels=64,kernel_size=(3,3),stride=(1,1),dilation=2,padding=1,bias=False,),
-                      # #  nn.Conv2d(in_channels=64,out_channels=64,groups=64,kernel_size=(3,3),stride=(1,1),padding=1,bias=False,),
-                      # #  nn.Conv2d(in_channels=64,out_channels=64,kernel_size=(1,1),padding=0,bias=False,),
-                      #  nn.ReLU(),
-                      #  nn.BatchNorm2d(64),   
-                      #  nn.Dropout(dropout_value) , # 16X16X64 | RF=29                                                         
+                                                                           
                        )
-        # depthwise seperable Convolution 2
+
         self.convblock_2 = nn.Sequential(
-        
+                        # Strided Convolution 2        
                        nn.Conv2d(in_channels=64,out_channels=32,kernel_size=(3,3),stride=(2,2),dilation=1,padding=1,bias=False,),
                        nn.ReLU(),
                        nn.BatchNorm2d(32),   
                        nn.Dropout(dropout_value), 
                       # # Input - 16X16X32 | Output - 8X8X32 | RF=37
 
+                       # depthwise seperable Convolution 3            
                        nn.Conv2d(in_channels=32,out_channels=32,groups=32,kernel_size=(3,3),stride=(1,1),padding=1,bias=False,),
                        # # Input - 8X8X32 | Output - 8X8X32 | RF=45
+            
+                        # Pointwise Convolution 3
                        nn.Conv2d(in_channels=32,out_channels=64,kernel_size=(1,1),stride=(1,1),padding=0,bias=False,),
                        # # Input - 8X8X32 | Output - 8X8X64 | RF=45
                        nn.ReLU(),
@@ -77,8 +80,10 @@ class Net(nn.Module):
                        nn.Dropout(dropout_value),
                       # pointwise   
 
+                       # depthwise seperable Convolution 4            
                        nn.Conv2d(in_channels=64,out_channels=64,groups=64,kernel_size=(3,3),stride=(1,1),padding=1,bias=False,),
                        # # Input - 8X8X64 | Output - 8X8X128 | RF=53
+                        # Pointwise Convolution 4            
                        nn.Conv2d(in_channels=64,out_channels=64,kernel_size=(1,1),stride=(1,1),padding=0,bias=False,),
                        nn.ReLU(),
                        nn.BatchNorm2d(64),  # pointwise 
@@ -86,24 +91,27 @@ class Net(nn.Module):
                        # # Input - 8X8X64 | Output - 8X8X64 | RF=53
 
                       )
-        # depthwise seperable Convolution 2
+
         self.convblock_3 = nn.Sequential(
         
-                       #Maxpooling
+                        # Strided Convolution 3
                        nn.Conv2d(in_channels=64,out_channels=64,kernel_size=(3,3),dilation=1,stride=(2,2),padding=1,bias=False),
                        nn.ReLU(),
                        nn.BatchNorm2d(64),  
                        nn.Dropout(dropout_value),
                       # # Input - 8X8X64 | Output - 4X4X64 | RF=69
-
+            
+                       # depthwise seperable Convolution 5
                        nn.Conv2d(in_channels=64,out_channels=128,groups=64,kernel_size=(3,3),stride=(1,1),padding=1,bias=False,),
                        # # Input - 4X4X64 | Output - 4X4X128 | RF=85
+                        # Pointwise Convolution 5            
                        nn.Conv2d(in_channels=128,out_channels=64,kernel_size=(1,1),stride=(1,1),padding=0,bias=False,),
                        nn.ReLU(),
                        nn.BatchNorm2d(64),
                        nn.Dropout(dropout_value),
                       #  # Input - 4X4X128 | Output - 4X4X64 | RF=85
-                     
+
+                       # Dilated Convolution 1
                        nn.Conv2d(in_channels=64,out_channels=32,kernel_size=(3,3),dilation=2,stride=(1,1),padding=2,bias=False),
                        nn.ReLU(),
                        nn.BatchNorm2d(32),  
@@ -115,8 +123,8 @@ class Net(nn.Module):
 
                        )
         # 4X4X10 | RF=121
-        self.gap = nn.Sequential(nn.AvgPool2d(kernel_size=4))
-        self.fc = nn.Linear(in_features = 10, out_features = 10)
+        self.gap = nn.Sequential(nn.AvgPool2d(kernel_size=4)) # Add GAP
+        self.fc = nn.Linear(in_features = 10, out_features = 10) # Add FC
 
         # Input - 4X4X64 | Output - 1X1X64 
         # self.fc1 = nn.Linear(128,10)
