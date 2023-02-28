@@ -1,3 +1,23 @@
+# Receptive Field Calculations
+
+<img width="1060" alt="image" src="https://user-images.githubusercontent.com/57046534/221738707-234fd981-a2c2-4c55-8bdd-60d2e34778b4.png">
+
+
+```
+Input_features	padding	kernel	stride	dilation	jump_In	jump_out	RF_In	RF_Out	Output_Feature	Input_Channel	Output_Channels	kernel_adjusted	Convolution Type
+32	1	3	1	1	1	1	1	3	32	3	64	3	Normal
+32	1	3	1	1	1	1	3	5	32	64	128	3	Normal
+32	0	2	2	1	1	2	5	6	16	128	128	2	MaxPool
+16	1	3	1	1	2	2	6	10	16	128	128	3	Normal
+16	1	3	1	1	2	2	10	14	16	128	128	3	Normal
+16	1	3	1	1	2	2	14	18	16	128	256	3	Normal
+16	0	2	2	1	2	4	18	20	8	256	256	2	MaxPool
+8	1	3	1	1	4	4	20	28	8	256	512	3	Normal
+8	0	2	2	1	4	8	28	32	4	512	512	2	MaxPool
+4	1	3	1	1	8	8	32	48	4	512	512	3	Normal
+4	1	3	1	1	8	8	48	64	4	512	512	3	Normal
+4	0	4	1	1	8	8	64	88	1	512	512	4	MaxPool
+```
 
 # Training Logs
 ```
