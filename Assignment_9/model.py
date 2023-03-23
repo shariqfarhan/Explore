@@ -1,4 +1,3 @@
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -9,30 +8,32 @@ dropout_value = 0.0
 class UltimusBlock(nn.Module):
     expansion = 1
 
-    def __init__(self, in_planes = 48, planes = 8):
-        super(UltimusBlock, self).__init__()
+    def __init__(self, dim_inp=48, dim_out=8, bias = False):  
+        super(UltimusBlock, self).__init__()  
+  
+        self.dim_inp = dim_inp
+        self.dim_out = dim_out
         
-        self.dimensions = planes
-        self.sqrt_dimensions = self.dimensions ** 0.5
-        
-        self.key = nn.Linear(in_planes, planes)
-        self.query = nn.Linear(in_planes, planes)
-        self.value = nn.Linear(in_planes, planes)
-
-        self.out = nn.Linear(planes, in_planes)
-
-    def forward(self, x):
-        key = self.key(x)
-        query = self.query(x)
-        value = self.query(x)
-        query_t = torch.transpose(query, 0, 1)
-        step1 = torch.matmul(query_t,key)
-        step2 = step1/(self.sqrt_dimensions)
-        softmax_initiation = nn.Softmax(dim = 1)
-        AM = softmax_initiation(step2)
-        z = torch.matmul(value, AM)
-        out = self.out(z)
-        return out
+  
+        self.q = nn.Linear(dim_inp, dim_out)  
+        self.k = nn.Linear(dim_inp, dim_out)  
+        self.v = nn.Linear(dim_inp, dim_out)
+        self.out = nn.Linear(dim_out, dim_inp)
+    
+    def forward(self, input_tensor: torch.Tensor):  
+        query, key, value = self.q(input_tensor), self.k(input_tensor), self.v(input_tensor)
+        key = key.view(key.size(0), 1, key.size(-1))
+        query = query.view(query.size(0), 1, query.size(-1))
+        value = value.view(value.size(0), 1, value.size(-1))
+  
+        scale = self.dim_out ** 0.5
+        query_t = torch.transpose(query, 1, 2)
+        AM = torch.matmul(query_t, key) / scale
+        AM = F.softmax(AM, dim = -1)
+        Z = torch.matmul(value, AM)
+        out_1 = self.out(Z)
+        out_1 = out_1.view(-1, out_1.size(-1))
+        return out_1
 
 class Net(nn.Module):
     def __init__(self, dropout_value=0.0, num_classes=10):
@@ -57,7 +58,7 @@ class Net(nn.Module):
             nn.Dropout(dropout_value)
         )
         self.gap1 = nn.MaxPool2d(kernel_size=32,stride = 1)
-        self.UltimusBlock = UltimusBlock(in_planes=48, planes=8)
+        self.UltimusBlock = UltimusBlock(dim_inp=48, dim_out=8, bias = False)
         self.final_FC_layer = nn.Linear(48, 10)
     
     def forward(self, x):
