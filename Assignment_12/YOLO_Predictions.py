@@ -1,3 +1,9 @@
+# Import YOLO Weights, Config file & COCO.names file
+
+# ! wget "https://pjreddie.com/media/files/yolov3.weights"
+# ! wget "https://raw.githubusercontent.com/pjreddie/darknet/master/cfg/yolov3.cfg"
+# ! wget "https://raw.githubusercontent.com/pjreddie/darknet/master/data/coco.names"
+
 # YOLO object detection
 import os
 import cv2 as cv
