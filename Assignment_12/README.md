@@ -108,6 +108,8 @@ The output video can be found on youtube [here](https://youtu.be/oz7feovtlcg)
 
 
 ## Train Performance
+We trained each of the classes with ~25 images for 50 epochs. Below are the sample images used for training and testing.
+
 ![image](https://user-images.githubusercontent.com/57046534/229205395-56276c0a-16d2-42d0-b44e-8ab9e95c21e1.png)
 
 ## Train Batch Input
