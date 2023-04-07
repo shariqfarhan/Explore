@@ -24,18 +24,16 @@ class Cifar10SearchDataset(torchvision.datasets.CIFAR10):
         return image, label
 
 
-train_transforms = A.Compose(
-    [
-      # A.RandomCrop(width=16, height=16),
-      A.HorizontalFlip(p=0.5),
-      A.CoarseDropout(max_holes = 1, max_height=16, max_width=16, min_holes = 1, min_height=16, min_width=16, fill_value=(0.5, 0.5, 0.5), mask_fill_value = None),
-      A.ShiftScaleRotate(),
-      # A.RandomBrightnessContrast(p=0.2),
-      A.Normalize((0.49139968, 0.48215841, 0.44653091), (0.24703223, 0.24348513, 0.26158784)),
-      ToTensorV2(),
-    ],
-    p=1.0,
-)
+train_transforms = A.Compose([
+            A.Sequential([
+                A.Normalize((0.49139968, 0.48215841, 0.44653091), (0.24703223, 0.24348513, 0.26158784)),
+                A.PadIfNeeded(min_height=40, min_width=40),
+                A.RandomCrop(32, 32),
+                A.HorizontalFlip(p=1),
+                A.CoarseDropout(max_holes=1, max_height=8, max_width=8, min_holes=1, min_height=8,
+                                min_width=8, fill_value=(0.49139968, 0.48215841, 0.44653091), mask_fill_value=None, always_apply=True)
+        ])
+        ])
 
 test_transforms = A.Compose([
     A.Normalize((0.49139968, 0.48215841, 0.44653091), (0.24703223, 0.24348513, 0.26158784)),
