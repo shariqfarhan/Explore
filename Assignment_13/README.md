@@ -35,6 +35,8 @@ Please refer to the training logs in the detailed section in the end
 
 # Part 2 : MNIST VAE
 
+The code for this can be found in [this file](https://github.com/shariqfarhan/Explore/blob/master/Assignment_13/VAE%20-%20MNIST.ipynb)
+
 A sample of 64 images where MNIST image is passed to the VAE model with correct label
 
 [Correct Label](https://github.com/shariqfarhan/Explore/blob/master/Assignment_13/MNIST_Correct_label.png)
@@ -51,7 +53,7 @@ A sample of 64 images where MNIST image is passed to the VAE model with incorrec
 
 # Part 3 : CIFAR VAE
 
-
+The code for this can be found in [this file](https://github.com/shariqfarhan/Explore/blob/master/Assignment_13/VAE%20-%20CIFAR.ipynb)
 
 # Part 1 : UNet from Scratch - Detailed
 
