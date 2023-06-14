@@ -1,4 +1,6 @@
-UNet from Scratch
+# Part 1 : UNet from Scratch
+
+## Part 1 Summary
 This repository contains the code for building a UNet model from scratch using PyTorch. The UNet architecture is a popular and effective model for image segmentation tasks. In this project, we have trained the UNet model four times, each time using a different approach for downsampling and upsampling, as well as different loss functions.
 
 Model Architectures
@@ -17,9 +19,6 @@ Binary Cross Entropy (BCE) Loss: This loss function is commonly used for binary 
 
 Dice Loss: The Dice coefficient is a similarity metric commonly used in image segmentation tasks. This loss function combines the BCE loss and the Dice coefficient to optimize both the pixel-level accuracy and the overall similarity of the segmentation.
 
-Getting Started
-To build and train the UNet model from scratch, follow these steps:
-
 
 Results
 After training the UNet model using different architectures and loss functions, we achieved the following results:
@@ -32,7 +31,29 @@ Model 3 (Strided Convolution, Transpose, BCE Loss): IOU of 0.58.
 
 Model 4 (Strided Convolution, UpSampling, Dice Loss): IOU of 0.58.
 
-Please refer to the training logs below 
+Please refer to the training logs in the detailed section in the end
+
+# Part 2 : MNIST VAE
+
+A sample of 64 images where MNIST image is passed to the VAE model with correct label
+
+[Correct Label](https://github.com/shariqfarhan/Explore/blob/master/Assignment_13/MNIST_Correct_label.png)
+
+![MNIST_Correct_label](https://github.com/shariqfarhan/Explore/assets/57046534/b84b2502-77f3-46da-a39f-3723ce62cb88)
+
+
+
+A sample of 64 images where MNIST image is passed to the VAE model with incorrect label
+
+[Incorrect Label](https://github.com/shariqfarhan/Explore/blob/master/Assignment_13/MNIST_incorrect_label.png)
+![MNIST_incorrect_label](https://github.com/shariqfarhan/Explore/assets/57046534/f5710f08-ecb0-4364-9153-3e52e7f2a0ce)
+
+
+# Part 3 : CIFAR VAE
+
+
+
+# Part 1 : UNet from Scratch - Detailed
 
 # Model 1 Output Logs
 
