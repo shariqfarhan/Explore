@@ -1,3 +1,39 @@
+UNet from Scratch
+This repository contains the code for building a UNet model from scratch using PyTorch. The UNet architecture is a popular and effective model for image segmentation tasks. In this project, we have trained the UNet model four times, each time using a different approach for downsampling and upsampling, as well as different loss functions.
+
+Model Architectures
+The following model architectures were implemented and trained:
+
+UNet with Max Pooling: This model uses max pooling for downsampling and upsampling operations. It is a commonly used approach in UNet implementations.
+
+UNet with Strided Convolution: Instead of using max pooling, this model utilizes strided convolutions for downsampling and transposed convolutions for upsampling.
+
+UNet with Upsampling: This model uses simple upsampling and convolutional layers for upsampling instead of transposed convolutions.
+
+Loss Functions
+The following loss functions were used during training:
+
+Binary Cross Entropy (BCE) Loss: This loss function is commonly used for binary segmentation tasks, where each pixel is classified as foreground or background.
+
+Dice Loss: The Dice coefficient is a similarity metric commonly used in image segmentation tasks. This loss function combines the BCE loss and the Dice coefficient to optimize both the pixel-level accuracy and the overall similarity of the segmentation.
+
+Getting Started
+To build and train the UNet model from scratch, follow these steps:
+
+
+Results
+After training the UNet model using different architectures and loss functions, we achieved the following results:
+
+Model 1 (Max Pooling, Transpose, BCE Loss): IOU of 0.58.
+
+Model 2 (Max Pooling, Transpose, Dice Loss): IOU of 0.58.
+
+Model 3 (Strided Convolution, Transpose, BCE Loss): IOU of 0.58.
+
+Model 4 (Strided Convolution, UpSampling, Dice Loss): IOU of 0.58.
+
+Please refer to the training logs below 
+
 # Model 1 Output Logs
 
 ```
@@ -105,9 +141,13 @@ Model 2 Ouptut
 
 ```
 100%|██████████| 86/86 [00:10<00:00,  7.99it/s]
-Model 1 IOU score: 0.5828412902909655
+Model 1 IOU score: 0.58
 100%|██████████| 86/86 [00:10<00:00,  8.07it/s]
-Model 2 IOU score: 0.5828412902909655
+Model 2 IOU score: 0.58
+100%|██████████| 86/86 [00:05<00:00, 15.41it/s]
+Model 3 IOU score: 0.58
+100%|██████████| 86/86 [00:05<00:00, 14.96it/s]
+Model 4 IOU score: 0.58
 ```
 
 References
