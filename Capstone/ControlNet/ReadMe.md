@@ -12,9 +12,9 @@ Below are the steps taken to achieve this
 
 We trained the model on [pokemon-blip-captions](https://huggingface.co/datasets/lambdalabs/pokemon-blip-captions) dataset and below is a sample output in various stages of training.
 
-One thing to note in the below predictions is that the model needs more than 100 epochs to generate high quality images. There's a visible improvement in the edges and quality of images being generated as the number of epochs increases.
+One thing to note in the below predictions is that the model needs more than 100 epochs to generate high quality images. There's a visible improvement in the edges and quality of images being generated as the number of epochs increases. The first image after 5000 steps doesn't consider the conditioning image (in the first case) and only generates output based on the prompt but in successive steps this is being addressed. 
 
-But this provides a good base for further tuning this or any other dataset.
+But this project provides a good base for further tuning this or any other dataset.
 
 ## Sample Predictions
 
