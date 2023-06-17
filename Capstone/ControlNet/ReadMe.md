@@ -12,6 +12,10 @@ Below are the steps taken to achieve this
 
 We trained the model on [pokemon-blip-captions](https://huggingface.co/datasets/lambdalabs/pokemon-blip-captions) dataset and below is a sample output in various stages of training.
 
+One thing to note in the below predictions is that the model needs more than 100 epochs to generate high quality images. There's a visible improvement in the edges and quality of images being generated as the number of epochs increases.
+
+But this provides a good base for further tuning this or any other dataset.
+
 ## Sample Predictions
 
 | Base Image | Prompt | 5,000 Steps (~24 Epochs) | 10,000 Steps (~48 Epochs)  | 15,000 Steps (~72 Epochs)  | 20,900 Steps (~100 Epochs)|
@@ -24,6 +28,28 @@ We trained the model on [pokemon-blip-captions](https://huggingface.co/datasets/
 The processed data used for this project can be found on Hugging Face called [pokemon_canny](https://huggingface.co/datasets/ShariqFarhan/pokemon_canny/tree/main). To create a conditioning image, we use the [canny](https://docs.opencv.org/4.x/da/d22/tutorial_py_canny.html) function from opencv library. The lambdalabs/pokemon-blip-captions contains images with captions, to this we use [canny](https://github.com/shariqfarhan/Explore/tree/master/Capstone/ControlNet/utilshttps://github.com/shariqfarhan/Explore/tree/master/Capstone/ControlNet/utils) to convert base images to canny edge, which would further be used as conditioning images for training.
 
 The processed files & dataset can be accessed [here](https://huggingface.co/datasets/ShariqFarhan/pokemon_canny/tree/main). 
+
+
+
+### Training
+
+We use the load_dataset feature of the datasets library to load file from a python file. The link to the file can be accessed [here](https://github.com/shariqfarhan/Explore/blob/master/Capstone/ControlNet/utils/pokemon_canny.py).
+
+The code to train controlnet can be found in [this notebook](https://github.com/shariqfarhan/Explore/blob/master/Capstone/ControlNet/Train%20ControlNet%20-%20pokemon%20canny.ipynb). This is based on the code shared by the diffusers team in this [repository](https://github.com/huggingface/diffusers/tree/main/examples/controlnet)
+
+
+### Inference
+
+During training we save the model checkpoints every 500 steps which could be used for predictions or resuming training in future.
+The above sample images show the output for the inferences at 5000, 10000, 15000 and the final step.
+
+The code for inferencing could be found [here](https://github.com/shariqfarhan/Explore/blob/master/Capstone/ControlNet/Inference.ipynb)
+
+
+## References
+
+1. Hugging Face diffusers - https://github.com/huggingface/diffusers/tree/main/examples/controlnet
+2. Hugging Face Load dataset - https://huggingface.co/docs/datasets/create_dataset
 
 
 
